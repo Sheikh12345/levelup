@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "828131326938",
+    "project_id": "level-up-761c6",
+    "storage_bucket": "level-up-761c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828131326938:android:3383a376b05b2c6ecfdee3",
+        "android_client_info": {
+          "package_name": "com.tasktakers.levelup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828131326938-rndpb9useqhjlfo8u56alkoppg61bqni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQsIzsVEfv_kT7jhSAq6BETClP96oPLkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828131326938-rndpb9useqhjlfo8u56alkoppg61bqni.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
