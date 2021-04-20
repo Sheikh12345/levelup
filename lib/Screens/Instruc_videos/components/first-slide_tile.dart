@@ -98,7 +98,7 @@ class CLBPSlide extends StatelessWidget {
             padding:EdgeInsets.only(left: size.width*0.01,top: size.height*0.005),
             child: Text("$desc",style: TextStyle(fontSize: size.width*0.025,fontWeight: FontWeight.w400,letterSpacing: 0.4,color: Colors.grey[900]),),
             width: size.width*0.68,
-            height: size.height*0.06,
+            height: size.height*0.07,
           ),
         ],
       ),

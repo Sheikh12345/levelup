@@ -123,7 +123,7 @@ class _RegularModuleState extends State<RegularModule> {
                     Positioned(
                       child: MaterialButton(
                         onPressed: () {
-                          Server().getDataFromServer();
+                          Server().getDataSkill();
                           screenPush(
                               context,
                               VideoPlayer(
