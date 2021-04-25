@@ -61,7 +61,7 @@ class _InstructionVideosState extends State<InstructionVideos>  with SingleTicke
        body: TabBarView(
           controller: _controller,
           children: [
-            ShopForVideo(),
+           ShopForVideos(),
             MyPurchases(),
           ],
         ),

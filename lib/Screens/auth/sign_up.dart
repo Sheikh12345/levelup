@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,8 +10,6 @@ import 'package:levelup/services/authentication.dart';
 import 'package:toast/toast.dart';
 
 import 'components/text_field.dart';
-
-
 
 class SignUp extends StatefulWidget {
   @override
@@ -30,7 +27,6 @@ class _SignUpState extends State<SignUp> {
   QuerySnapshot querySnapshot;
   @override
   void initState() {
-
     super.initState();
     setState(() {
       passIsVisible = true;
@@ -76,15 +72,17 @@ class _SignUpState extends State<SignUp> {
                   hintText: "Password",
                   leftIcon: Icon(Icons.vpn_key_rounded),
                   controller: _controllerPassword,
-                  obscureText:passIsVisible ,
-                  rightIcon: IconButton(icon: Icon(passIsVisible
-                      ? Icons.visibility_off
-                      : Icons.remove_red_eye),onPressed: (){
-                    setState(() {
-                      passIsVisible=!passIsVisible;
-
-                    });
-                  },),
+                  obscureText: passIsVisible,
+                  rightIcon: IconButton(
+                    icon: Icon(passIsVisible
+                        ? Icons.visibility_off
+                        : Icons.remove_red_eye),
+                    onPressed: () {
+                      setState(() {
+                        passIsVisible = !passIsVisible;
+                      });
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: size.height * 0.03,
@@ -145,7 +143,8 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  singUp(){
+  singUp() {
+
     if (_controllerName.text.length < 2) {
       Toast.show("Name is short", context, gravity: 1);
     } else {
@@ -157,14 +156,21 @@ class _SignUpState extends State<SignUp> {
                   _controllerEmail.text, _controllerPassword.text, context)
               .then((value) {
             if (value != null) {
-              _firesUser.collection("Users").doc(FirebaseAuth.instance.currentUser.uid).set({
-                 "Cards":FieldValue.arrayUnion(cards),
-                "name":_controllerName.text.toString()
-              }).whenComplete((){
-                _firesUser.collection("Users").doc(FirebaseAuth.instance.currentUser.uid).update({
-                  "purchaseCourses":FieldValue.arrayUnion(courses)
-                }).whenComplete((){
-                  deleteFirstCourseDoc();
+              _firesUser
+                  .collection("Users")
+                  .doc(FirebaseAuth.instance.currentUser.uid)
+                  .set({
+                "Cards": FieldValue.arrayUnion(cards),
+                "name": _controllerName.text.toString(),
+                "likedVideosList":[],
+                "CourseIsAvailable":false
+              }).whenComplete(() {
+                _firesUser
+                    .collection("Users")
+                    .doc(FirebaseAuth.instance.currentUser.uid)
+                    .update({
+                  "listCourses": FieldValue.arrayUnion(courses)
+                }).whenComplete(() {
                 });
               });
 
@@ -180,20 +186,4 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  deleteFirstCourseDoc()async{
-    _firesUser.collection("Users").doc(FirebaseAuth.instance.currentUser.uid).collection("purchaseCourses").doc(FirebaseAuth.instance.currentUser.uid).set({
-      "name":"kashif"
-    }).whenComplete((){
-      print("Created");
-      Future.delayed(Duration(seconds: 3),(){
-        _firesUser
-            .collection("Users")
-            .doc(FirebaseAuth.instance.currentUser.uid)
-            .collection("purchaseCourses").doc(FirebaseAuth.instance.currentUser.uid).delete().whenComplete((){
-          print("deleted");
-        });
-      });
-    });
-
-  }
 }

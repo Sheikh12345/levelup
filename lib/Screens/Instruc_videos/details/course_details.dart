@@ -15,13 +15,15 @@ class CourseDetails extends StatefulWidget {
   final thumbnail;
   final route;
   final myPurchases;
+  final link;
   const CourseDetails(
       {Key key,
       this.json,
       this.trailer,
       this.thumbnail,
       this.route,
-      this.myPurchases})
+      this.myPurchases,
+      this.link})
       : super(key: key);
 
   @override
@@ -29,8 +31,29 @@ class CourseDetails extends StatefulWidget {
 }
 
 class _CourseDetailsState extends State<CourseDetails> {
+  int totalTime = 0;
+
+  @override
+  void initState() {
+    for (int i = 0; i < widget.json.dataDurations.length; i++) {
+      totalTime += int.parse(
+          widget.json.dataDurations[i].duration.toString().split(".").first);
+    }
+
+    for (int i = 0; i < widget.json.bonusDuration.length; i++) {
+      totalTime += int.parse(
+          widget.json.bonusDuration[i].duration.toString().split(".").first);
+    }
+    setState(() {
+      totalTime = totalTime ~/ 60.0;
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // print("duration => ${int.parse(widget.json.dataDurations[0].duration.toString().split(".").first)}");
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
@@ -52,86 +75,91 @@ class _CourseDetailsState extends State<CourseDetails> {
                     Navigator.pop(context);
                   },
                 ),
-                coursesList.contains(widget.route)? Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                      top: size.height * 0.05 + 4,
-                      bottom: size.height * 0.01,
-                      right: size.width * 0.08),
-                  height: size.height * 0.04,
-                  width: size.width * 0.6,
-                  child: Text(
-                    "Available in my purchases",
-                    style: TextStyle(
-                        color: secondaryClrWhite,
-                        fontSize: size.height * 0.02,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  padding: EdgeInsets.only(
-                      top: size.height * 0.002,
-                      left: size.width * 0.01,
-                      bottom: size.height * 0.003),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(size.width * 0.01),
-                      border: Border(
-                          top: BorderSide(
-                              color: secondaryClrWhite.withOpacity(0.8),
-                              width: size.width * 0.007),
-                          left: BorderSide(
-                              color: secondaryClrWhite.withOpacity(0.8),
-                              width: size.width * 0.007),
-                          right: BorderSide(
-                              color: secondaryClrWhite.withOpacity(0.8),
-                              width: size.width * 0.007),
-                          bottom: BorderSide(
-                              color: secondaryClrWhite.withOpacity(0.8),
-                              width: size.width * 0.007))),
-                ):InkWell(
-                  onTap: () {
-                    screenPush(
-                        context,
-                        PaymentHome(
-                          amount: widget.json.price.toString(),
-                          courseRoute: widget.route,
-                          json: widget.json,
-                        ));
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                        top: size.height * 0.05 + 4,
-                        bottom: size.height * 0.01,
-                        right: size.width * 0.08),
-                    height: size.height * 0.04,
-                    width: size.width * 0.4,
-                    child: Text(
-                      "PURCHASE  \$${widget.json.price}",
-                      style: TextStyle(
-                          color: secondaryClrWhite,
-                          fontSize: size.height * 0.02,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    padding: EdgeInsets.only(
-                        top: size.height * 0.002,
-                        left: size.width * 0.01,
-                        bottom: size.height * 0.003),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(size.width * 0.01),
-                        border: Border(
-                            top: BorderSide(
-                                color: secondaryClrWhite.withOpacity(0.8),
-                                width: size.width * 0.007),
-                            left: BorderSide(
-                                color: secondaryClrWhite.withOpacity(0.8),
-                                width: size.width * 0.007),
-                            right: BorderSide(
-                                color: secondaryClrWhite.withOpacity(0.8),
-                                width: size.width * 0.007),
-                            bottom: BorderSide(
-                                color: secondaryClrWhite.withOpacity(0.8),
-                                width: size.width * 0.007))),
-                  ),
-                )
+                coursesList.contains(widget.route)
+                    ? Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(
+                            top: size.height * 0.05 + 4,
+                            bottom: size.height * 0.01,
+                            right: size.width * 0.08),
+                        height: size.height * 0.04,
+                        width: size.width * 0.6,
+                        child: Text(
+                          "Available in my purchases",
+                          style: TextStyle(
+                              color: secondaryClrWhite,
+                              fontSize: size.height * 0.02,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        padding: EdgeInsets.only(
+                            top: size.height * 0.002,
+                            left: size.width * 0.01,
+                            bottom: size.height * 0.003),
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(size.width * 0.01),
+                            border: Border(
+                                top: BorderSide(
+                                    color: secondaryClrWhite.withOpacity(0.8),
+                                    width: size.width * 0.007),
+                                left: BorderSide(
+                                    color: secondaryClrWhite.withOpacity(0.8),
+                                    width: size.width * 0.007),
+                                right: BorderSide(
+                                    color: secondaryClrWhite.withOpacity(0.8),
+                                    width: size.width * 0.007),
+                                bottom: BorderSide(
+                                    color: secondaryClrWhite.withOpacity(0.8),
+                                    width: size.width * 0.007))),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          screenPush(
+                              context,
+                              PaymentHome(
+                                link: widget.link,
+                                amount: widget.json.price.toString(),
+                                courseRoute: widget.route,
+                                json: widget.json,
+                              ));
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(
+                              top: size.height * 0.05 + 4,
+                              bottom: size.height * 0.01,
+                              right: size.width * 0.08),
+                          height: size.height * 0.04,
+                          width: size.width * 0.4,
+                          child: Text(
+                            "PURCHASE  \$${widget.json.price}",
+                            style: TextStyle(
+                                color: secondaryClrWhite,
+                                fontSize: size.height * 0.02,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          padding: EdgeInsets.only(
+                              top: size.height * 0.002,
+                              left: size.width * 0.01,
+                              bottom: size.height * 0.003),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(size.width * 0.01),
+                              border: Border(
+                                  top: BorderSide(
+                                      color: secondaryClrWhite.withOpacity(0.8),
+                                      width: size.width * 0.007),
+                                  left: BorderSide(
+                                      color: secondaryClrWhite.withOpacity(0.8),
+                                      width: size.width * 0.007),
+                                  right: BorderSide(
+                                      color: secondaryClrWhite.withOpacity(0.8),
+                                      width: size.width * 0.007),
+                                  bottom: BorderSide(
+                                      color: secondaryClrWhite.withOpacity(0.8),
+                                      width: size.width * 0.007))),
+                        ),
+                      )
               ],
             ),
           ),
@@ -213,7 +241,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                   Container(
                     margin: EdgeInsets.only(top: size.height * 0.01),
                     child: Text(
-                      "GETTING STARTED - Designed for Beginner Players - Skill Level 1.0-1.9",
+                      "GETTING STARTED - Designed for ${widget.json.title}",
                       style: TextStyle(
                           fontSize: size.width * 0.026,
                           fontWeight: FontWeight.w500,
@@ -259,7 +287,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                   Container(
                     margin: EdgeInsets.only(top: size.height * 0.015),
                     child: Text(
-                      "51 Minutes / ${widget.json.data.length} Videos / Includes Personal Video Duets",
+                      "$totalTime Minutes / ${widget.json.data.length + widget.json.bonus.length} Videos / Includes Personal Video Duets",
                       style: TextStyle(
                           fontSize: size.width * 0.026,
                           fontWeight: FontWeight.w500,
@@ -312,7 +340,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                             child: Stack(
                               children: [
                                 ListView.builder(
-                                    itemCount: widget.json.data.length,
+                                    itemCount: widget.json.dataDurations.length,
                                     itemBuilder: (context, index) {
                                       return Container(
                                         width: size.width * 0.7,
@@ -322,7 +350,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                                           children: [
                                             Container(
                                               child: Text(
-                                                "${widget.json.data[index]}",
+                                                "${widget.json.dataDurations[index].fileName.toString().split(".").first}",
                                                 style: txtStylePop(
                                                     size: size.width * 0.03,
                                                     color: Colors.black,
@@ -333,11 +361,11 @@ class _CourseDetailsState extends State<CourseDetails> {
                                             Container(
                                               width: size.width * 0.23,
                                               child: Text(
-                                                "${widget.json.data.length} minutes",
-                                                style: txtStylePop(
+                                                "${int.parse(widget.json.dataDurations[index].duration.toString().split(".").first) ~/ 60} min   ${int.parse(widget.json.dataDurations[index].duration.toString().split(".").first)} sec",
+                                                style: txtStyleCab(
                                                     size: size.width * 0.03,
                                                     color: Colors.black,
-                                                    weight: FontWeight.w500),
+                                                    weight: FontWeight.w600),
                                               ),
                                             ),
                                           ],
@@ -372,7 +400,8 @@ class _CourseDetailsState extends State<CourseDetails> {
                               child: Stack(
                                 children: [
                                   ListView.builder(
-                                      itemCount: widget.json.bonus.length,
+                                      itemCount:
+                                          widget.json.bonusDuration.length,
                                       itemBuilder: (context, index) {
                                         return Container(
                                           width: size.width * 0.7,
@@ -381,18 +410,21 @@ class _CourseDetailsState extends State<CourseDetails> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                "${widget.json.bonus[index]}",
+                                                "${widget.json.bonusDuration[index].fileName.toString().split(".").first}",
                                                 style: txtStylePop(
                                                     size: size.width * 0.03,
                                                     color: Colors.black,
                                                     weight: FontWeight.w500),
                                               ),
-                                              Text(
-                                                "${widget.json.bonus.length} minutes",
-                                                style: txtStylePop(
-                                                    size: size.width * 0.03,
-                                                    color: Colors.black,
-                                                    weight: FontWeight.w500),
+                                              Container(
+                                                width: size.width * 0.23,
+                                                child: Text(
+                                                  "${int.parse(widget.json.bonusDuration[index].duration.toString().split(".").first) ~/ 60} min   ${int.parse(widget.json.dataDurations[index].duration.toString().split(".").first)} sec",
+                                                  style: txtStyleCab(
+                                                      size: size.width * 0.03,
+                                                      color: Colors.black,
+                                                      weight: FontWeight.w600),
+                                                ),
                                               ),
                                             ],
                                           ),

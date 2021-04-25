@@ -1,7 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:levelup/Screens/Instruc_videos/instruc_video_online.dart';
+import 'package:levelup/Screens/auth/sign_in.dart';
+import 'package:levelup/Screens/camps/levelup_camps.dart';
+import 'package:levelup/Style/appColor.dart';
 import 'package:levelup/common/common.dart';
+import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,6 +17,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser.uid).get().then((value){
+      coursesList = value.get("listCourses");
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -110,7 +127,7 @@ class _HomePageState extends State<HomePage> {
             ),
             InkWell(
               onTap: () {
-                screenPush(context, InstructionVideos());
+                screenPush(context, CampsLevelUp());
               },
               child: Container(
                 child: Stack(
@@ -155,6 +172,13 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: primaryClr,
+          child: Icon(Icons.logout),
+          onPressed: () async{
+            _showDialog(size,context);
+          },
+        ),
       ),
     );
   }
@@ -162,4 +186,96 @@ class _HomePageState extends State<HomePage> {
   void _launchURL(String _url) async => await canLaunch(_url)
       ? await launch(_url)
       : throw 'Could not launch $_url';
+
+  _showDialog(Size size, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => CupertinoAlertDialog(
+        title: Text("Are you sure to logout?"),
+        actions: [
+          MaterialButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut().whenComplete(() {
+                Toast.show("Successfully logout", context,
+                    gravity: 1,
+                    duration: 1,
+                    textColor: Colors.black,
+                    backgroundColor: primaryClr);
+              });
+              Navigator.pop(context);
+              screenPushRep(context, SignIn());
+            },
+            child: Text("Yes"),
+          ),
+          MaterialButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("No"),
+          )
+        ],
+      ),
+    );
+  }
+
+  // ignore: non_constant_identifier_names
+  DialogContent(Size size) {
+    return Stack(
+      alignment: Alignment.center,
+      overflow: Overflow.visible,
+      children: [
+        Container(
+          alignment: Alignment.center,
+          height: size.width * 0.7,
+          width: size.width,
+        ),
+        Positioned(
+          bottom: 190,
+          left: 50,
+          right: 50,
+          child: CircleAvatar(
+            radius: 60,
+            backgroundColor: Colors.transparent,
+            child: Image.asset(
+              "assets/images/icon.png",
+            ),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.only(top: 80),
+          height: size.width * 0.6,
+          child: Column(
+            children: [
+              Text(
+                "Thanks for choosing us",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+              ),
+              Text(
+                "We will contact you soon!",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    height: 2,
+                    color: Colors.black),
+              ),
+              Spacer(),
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Ok",
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xFF005C97),
+                      fontWeight: FontWeight.w900),
+                ),
+              )
+            ],
+          ),
+        )
+      ],
+    );
+  }
 }

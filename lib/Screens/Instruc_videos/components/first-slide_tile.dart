@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:levelup/Style/appTextStyle.dart';
 import 'package:levelup/common/common.dart';
 
-import '../course_details.dart';
+import '../details/course_details.dart';
 /// complete level based program
 class CLBPSlide extends StatelessWidget {
   final title;

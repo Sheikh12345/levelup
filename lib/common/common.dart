@@ -11,3 +11,6 @@ screenPush(BuildContext context,Widget widget){
  }
 
  List<dynamic> coursesList =[];
+ Map<String, dynamic> skillsResponse;
+ String ildsResponse;
+ String dgfsResponse;

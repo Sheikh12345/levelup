@@ -8,19 +8,19 @@ import 'package:levelup/VideoPlayer/video_player.dart';
 import 'package:levelup/common/common.dart';
 import 'package:toast/toast.dart';
 
-class VideoOverview extends StatefulWidget {
+class CourseOverview extends StatefulWidget {
   final link;
   final imageLink;
   final title;
   final description;
-  const VideoOverview(
+  const CourseOverview(
       {Key key, this.link, this.imageLink, this.title, this.description})
       : super(key: key);
   @override
-  _VideoOverviewState createState() => _VideoOverviewState();
+  _CourseOverviewState createState() => _CourseOverviewState();
 }
 
-class _VideoOverviewState extends State<VideoOverview>
+class _CourseOverviewState extends State<CourseOverview>
     with SingleTickerProviderStateMixin {
   TabController _controller;
 
@@ -188,7 +188,7 @@ class _VideoOverviewState extends State<VideoOverview>
                 ),
 
                 FutureBuilder(
-                    future: Server().getSkillData(url: widget.link),
+                    future: Server().getIldData(url: widget.link),
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
                         return Container(
@@ -365,8 +365,7 @@ class _VideoOverviewState extends State<VideoOverview>
                                                                       screenPush(
                                                                           context,
                                                                           RegularModule(
-                                                                            title:
-                                                                                snapshot.data.videoDetail[index].name,
+                                                                            title:snapshot.data.videoDetail[index].name,
                                                                             desc:
                                                                                 snapshot.data.videoDetail[index].description,
                                                                             link:
@@ -443,14 +442,14 @@ class _VideoOverviewState extends State<VideoOverview>
                                                                               weight: FontWeight.w600)),
                                                                       TextSpan(
                                                                           text:
-                                                                              " (${(int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first) ~/ 60)} min  ${int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first)} sec) \n",
+                                                                              " (${int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first) ~/ 60} min  ${int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first)} sec) \n",
                                                                           style: txtStylePop(
                                                                               color: Colors.grey[600],
                                                                               size: size.width * 0.024,
                                                                               weight: FontWeight.w600)),
                                                                       TextSpan(
                                                                           text:
-                                                                              "${snapshot.data.videoDetail[index].description.toString().substring(0, 135)}",
+                                                                              "${descText(snapshot.data.videoDetail[index].description)}",
                                                                           style: txtStylePop(
                                                                               color: Colors.grey[600],
                                                                               size: size.width * 0.024,
@@ -540,23 +539,23 @@ class _VideoOverviewState extends State<VideoOverview>
                                                   return Container(
                                                     child: Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
+                                                      MainAxisAlignment
+                                                          .start,
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
+                                                      CrossAxisAlignment
+                                                          .start,
                                                       children: [
                                                         Container(
                                                           margin:
-                                                              EdgeInsets.all(
+                                                          EdgeInsets.all(
                                                             size.height * 0.01,
                                                           ),
                                                           height: size.height *
                                                               0.15,
                                                           width:
-                                                              size.width * 0.5,
+                                                          size.width * 0.5,
                                                           decoration:
-                                                              BoxDecoration(
+                                                          BoxDecoration(
                                                             color: Colors.green,
                                                             image: DecorationImage(
                                                                 image: NetworkImage(
@@ -568,42 +567,42 @@ class _VideoOverviewState extends State<VideoOverview>
                                                             children: [
                                                               Positioned(
                                                                 child:
-                                                                    Container(
+                                                                Container(
                                                                   width:
-                                                                      size.width *
-                                                                          0.46,
+                                                                  size.width *
+                                                                      0.46,
                                                                   height:
-                                                                      size.height *
-                                                                          0.13,
+                                                                  size.height *
+                                                                      0.13,
                                                                   decoration:
-                                                                      BoxDecoration(
+                                                                  BoxDecoration(
                                                                     color: Colors
                                                                         .transparent,
                                                                     border:
-                                                                        Border(
+                                                                    Border(
                                                                       top:
-                                                                          BorderSide(
+                                                                      BorderSide(
                                                                         color: Colors
                                                                             .white,
                                                                         width: size.width *
                                                                             0.005,
                                                                       ),
                                                                       bottom:
-                                                                          BorderSide(
+                                                                      BorderSide(
                                                                         color: Colors
                                                                             .white,
                                                                         width: size.width *
                                                                             0.005,
                                                                       ),
                                                                       left:
-                                                                          BorderSide(
+                                                                      BorderSide(
                                                                         color: Colors
                                                                             .white,
                                                                         width: size.width *
                                                                             0.005,
                                                                       ),
                                                                       right:
-                                                                          BorderSide(
+                                                                      BorderSide(
                                                                         color: Colors
                                                                             .white,
                                                                         width: size.width *
@@ -613,24 +612,24 @@ class _VideoOverviewState extends State<VideoOverview>
                                                                   ),
                                                                 ),
                                                                 top:
-                                                                    size.height *
-                                                                        0.011,
+                                                                size.height *
+                                                                    0.011,
                                                                 left:
-                                                                    size.width *
-                                                                        0.016,
+                                                                size.width *
+                                                                    0.016,
                                                               ),
                                                               Positioned(
                                                                 child:
-                                                                    IconButton(
+                                                                IconButton(
                                                                   icon: Icon(
                                                                     Icons
                                                                         .play_circle_outline_sharp,
                                                                     color: Colors
                                                                         .white
                                                                         .withOpacity(
-                                                                            0.8),
+                                                                        0.8),
                                                                     size: size.width *
-                                                                            0.07 +
+                                                                        0.07 +
                                                                         16,
                                                                   ),
                                                                   onPressed:
@@ -638,78 +637,69 @@ class _VideoOverviewState extends State<VideoOverview>
                                                                     if (snapshot
                                                                         .data
                                                                         .videoDetail[
-                                                                            index]
+                                                                    index]
                                                                         .name
                                                                         .contains(
-                                                                            "duet")) {
+                                                                        "duet")) {
                                                                       screenPush(
-                                                                        context,
-                                                                        DuetMode(
-                                                                          jsonData:
-                                                                              snapshot.data,
-                                                                          videoAddress:
-                                                                              "${snapshot.data.videoDetail[index].name}",
-                                                                        ),
-                                                                      );
+                                                                          context,
+                                                                          DuetMode(
+                                                                            jsonData:
+                                                                            snapshot.data,
+                                                                            videoAddress:
+                                                                            "${snapshot.data.videoDetail[index].name}",
+                                                                          ));
                                                                     } else {
-                                                                      print(snapshot
-                                                                          .data
-                                                                          .videoDetail[
-                                                                              index]
-                                                                          .name);
                                                                       screenPush(
                                                                           context,
                                                                           RegularModule(
-                                                                            title:
-                                                                                snapshot.data.videoDetail[index].name,
-                                                                            link:
-                                                                                widget.link,
+                                                                            title: snapshot.data.videoDetail[index].name,
                                                                             desc:
-                                                                                snapshot.data.videoDetail[index].description,
-                                                                            jsonData:
-                                                                                snapshot.data,
-                                                                            videoAddress:
-                                                                                "${snapshot.data.videoDetail[index].name}",
+                                                                            snapshot.data.videoDetail[index].description,
+                                                                            link:
+                                                                            widget.link,
                                                                             imageAddress:
-                                                                                widget.imageLink,
+                                                                            widget.imageLink,
+                                                                            videoAddress:
+                                                                            "${snapshot.data.videoDetail[index].name}",
                                                                           ));
                                                                     }
                                                                   },
                                                                 ),
                                                                 top:
-                                                                    size.height *
-                                                                        0.038,
+                                                                size.height *
+                                                                    0.038,
                                                                 left:
-                                                                    size.width *
-                                                                        0.17,
+                                                                size.width *
+                                                                    0.17,
                                                               ),
                                                               Positioned(
                                                                 child:
-                                                                    Container(
+                                                                Container(
                                                                   margin: EdgeInsets.only(
                                                                       top: size
-                                                                              .height *
+                                                                          .height *
                                                                           0.05),
                                                                   height:
-                                                                      size.height *
-                                                                          0.047,
+                                                                  size.height *
+                                                                      0.047,
                                                                   width:
-                                                                      size.width *
-                                                                          0.12,
+                                                                  size.width *
+                                                                      0.12,
                                                                   child: Image
                                                                       .asset(
-                                                                          "assets/images/iconwhite.png"),
+                                                                      "assets/images/iconwhite.png"),
                                                                   color: Colors
                                                                       .black
                                                                       .withOpacity(
-                                                                          0.1),
+                                                                      0.1),
                                                                 ),
                                                                 top:
-                                                                    size.height *
-                                                                        0.06,
+                                                                size.height *
+                                                                    0.06,
                                                                 left:
-                                                                    size.width *
-                                                                        0.01,
+                                                                size.width *
+                                                                    0.01,
                                                               )
                                                             ],
                                                           ),
@@ -719,35 +709,35 @@ class _VideoOverviewState extends State<VideoOverview>
                                                               top: size.height *
                                                                   0.01),
                                                           width:
-                                                              size.width * 0.45,
+                                                          size.width * 0.45,
                                                           child: Column(
                                                             mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
+                                                            MainAxisAlignment
+                                                                .start,
                                                             crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                                            CrossAxisAlignment
+                                                                .start,
                                                             children: [
                                                               RichText(
                                                                 text: TextSpan(
                                                                     children: [
                                                                       TextSpan(
                                                                           text:
-                                                                              "${snapshot.data.videoDetail[index].name.toString().split(".").first}",
+                                                                          "${snapshot.data.videoDetail[index].name.toString().split(".").first}",
                                                                           style: txtStylePop(
                                                                               color: Colors.black,
                                                                               size: size.width * 0.024,
                                                                               weight: FontWeight.w600)),
                                                                       TextSpan(
                                                                           text:
-                                                                              " (${(int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first) ~/ 60)} min  ${int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first)} sec) \n",
+                                                                          " (${int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first) ~/ 60} min  ${int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first)} sec) \n",
                                                                           style: txtStylePop(
                                                                               color: Colors.grey[600],
                                                                               size: size.width * 0.024,
                                                                               weight: FontWeight.w600)),
                                                                       TextSpan(
                                                                           text:
-                                                                              "${snapshot.data.videoDetail[index].description.toString().substring(0, 135)}",
+                                                                          "${descText(snapshot.data.videoDetail[index].description)}",
                                                                           style: txtStylePop(
                                                                               color: Colors.grey[600],
                                                                               size: size.width * 0.024,
@@ -757,30 +747,30 @@ class _VideoOverviewState extends State<VideoOverview>
                                                               if (snapshot
                                                                   .data
                                                                   .videoDetail[
-                                                                      index]
+                                                              index]
                                                                   .name
                                                                   .toString()
                                                                   .contains(
-                                                                      "duet"))
+                                                                  "duet"))
                                                                 InkWell(
                                                                   child:
-                                                                      Container(
+                                                                  Container(
                                                                     alignment:
-                                                                        Alignment
-                                                                            .center,
+                                                                    Alignment
+                                                                        .center,
                                                                     margin: EdgeInsets.only(
                                                                         top: size.height *
                                                                             0.02,
                                                                         bottom: size.height *
                                                                             0.01),
                                                                     height: size
-                                                                            .height *
+                                                                        .height *
                                                                         0.04,
                                                                     width:
-                                                                        size.width *
-                                                                            0.4,
+                                                                    size.width *
+                                                                        0.4,
                                                                     color:
-                                                                        primaryClr,
+                                                                    primaryClr,
                                                                     child: Text(
                                                                       "Video Duet",
                                                                       style: txtStyleCab(
@@ -797,9 +787,9 @@ class _VideoOverviewState extends State<VideoOverview>
                                                                         context,
                                                                         DuetMode(
                                                                           jsonData:
-                                                                              snapshot.data,
+                                                                          snapshot.data,
                                                                           videoAddress:
-                                                                              "${snapshot.data.videoDetail[index].name}",
+                                                                          "${snapshot.data.videoDetail[index].name}",
                                                                         ));
                                                                   },
                                                                 )
@@ -832,5 +822,13 @@ class _VideoOverviewState extends State<VideoOverview>
         ),
       ),
     );
+  }
+
+  descText(String text){
+    if(text.toString().length>135){
+      return text.toString().substring(0,135);
+    }else{
+      return text;
+    }
   }
 }

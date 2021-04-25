@@ -18,7 +18,8 @@ class PaymentHome extends StatefulWidget {
   final String amount;
   final courseRoute;
   final json;
-  PaymentHome({Key key, this.amount, this.courseRoute, this.json})
+  final link;
+  PaymentHome({Key key, this.amount, this.courseRoute, this.json, this.link})
       : super(key: key);
 
   @override
@@ -26,6 +27,11 @@ class PaymentHome extends StatefulWidget {
 }
 
 class PaymentHomeState extends State<PaymentHome> {
+
+
+
+
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   FirebaseFirestore _firesUser = FirebaseFirestore.instance;
   onItemPress(BuildContext context, int index) async {
@@ -339,23 +345,30 @@ class PaymentHomeState extends State<PaymentHome> {
   }
 
   addRouteToUsersPurchases() {
+    print("add Route To Users Purchases");
     coursesList.add(widget.courseRoute);
-    _fireRefUsers
-        .doc(FirebaseAuth.instance.currentUser.uid)
-        .collection("purchaseCourses")
-        .add({
-      "data": FieldValue.arrayUnion(widget.json.data),
-      "bonus": FieldValue.arrayUnion(widget.json.bonus),
-      "thumbnail": FieldValue.arrayUnion(widget.json.thumbnail),
-      "trailer": FieldValue.arrayUnion(widget.json.trailer),
-      "title": widget.json.title,
-      "description": widget.json.description,
-      "address": widget.courseRoute
-    }).whenComplete(() {
+    try {
       FirebaseFirestore.instance
           .collection("Users")
           .doc(FirebaseAuth.instance.currentUser.uid)
-          .update({"listCourses": FieldValue.arrayUnion(coursesList)});
-    });
+          .collection("purchaseCourses").add({
+        "link":"${widget.link}",
+        "title": widget.json.title??"",
+        "description": widget.json.description??"",
+        "address": widget.courseRoute??""
+      }).whenComplete(() {
+        Future.delayed(Duration(seconds: 2),(){
+          FirebaseFirestore.instance
+              .collection("Users")
+              .doc(FirebaseAuth.instance.currentUser.uid)
+              .update({
+            "listCourses": FieldValue.arrayUnion(coursesList),
+            "CourseIsAvailable": true
+          });
+        });
+      });
+    } catch (e) {
+      print("error stripe => ${e.toString()}");
+    }
   }
 }

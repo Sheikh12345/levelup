@@ -1,4 +1,7 @@
 import 'package:better_player/better_player.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:levelup/Services/database-server/server.dart';
 import 'package:levelup/Style/appColor.dart';
@@ -6,30 +9,51 @@ import 'package:levelup/Style/appTextStyle.dart';
 import 'package:levelup/VideoPlayer/video_player.dart';
 import 'package:levelup/common/common.dart';
 
-
 class RegularModule extends StatefulWidget {
   final String videoAddress;
+  final desc;
+  final link;
   final jsonData;
-  const RegularModule({Key key, this.videoAddress, this.jsonData}) : super(key: key);
+  final imageAddress;
+  final title;
+  const RegularModule(
+      {Key key,
+      this.videoAddress,
+      this.desc,
+      this.link,
+      this.jsonData,
+      this.imageAddress, this.title:""})
+      : super(key: key);
   @override
   _RegularModuleState createState() => _RegularModuleState();
 }
 
 class _RegularModuleState extends State<RegularModule> {
-  String _serverUrl ="https://pickleball-levelup.herokuapp.com";
-  String _descr = "Serving\n"
-      "1. Position yourself so that you are prepared to\n"
-      "hit a forehand drop/drive on your next shot\n\n"
-      " 2. Beginner Serving: Face your torso towards\n"
-      "your target\n\n"
-      "1. Position yourself so that you are prepared to\n"
-      "hit a forehand drop/drive on your next shot\n\n"
-      "2. Beginner Serving: Face your torso towards\n"
-      "your target\n\n"
-      "1. Position yourself so that you are prepared to\n"
-      "hit a forehand drop/drive on your next shot\n\n"
-      "2. Beginner Serving: Face your torso towards\n"
-      "your target\n\n";
+  bool _likeButton;
+  List _likeVideos = [];
+  var color = Colors.transparent;
+  @override
+  void initState() {
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .get()
+        .then((value) {
+      _likeVideos = value.get("likedVideosList");
+    }).whenComplete(() {
+      print(_likeVideos.length.toString());
+      setState(() {
+        color = _likeVideos.any((element) => element
+                .toString()
+                .contains("${widget.link}${widget.videoAddress}"))
+            ? Colors.red
+            : Colors.grey;
+      });
+    });
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -77,7 +101,7 @@ class _RegularModuleState extends State<RegularModule> {
                 decoration: BoxDecoration(
                   color: Colors.green,
                   image: DecorationImage(
-                      image: AssetImage("assets/images/skill1.png"),
+                      image: NetworkImage(widget.imageAddress),
                       fit: BoxFit.fill),
                 ),
                 child: Stack(
@@ -123,11 +147,10 @@ class _RegularModuleState extends State<RegularModule> {
                     Positioned(
                       child: MaterialButton(
                         onPressed: () {
-                          Server().getDataSkill();
                           screenPush(
                               context,
                               VideoPlayer(
-                                address:"$_serverUrl${widget.jsonData["address"]}/${widget.videoAddress}",
+                                address: "${widget.link}${widget.videoAddress}",
                               ));
                         },
                         child: Icon(
@@ -139,16 +162,57 @@ class _RegularModuleState extends State<RegularModule> {
                       top: size.height * 0.09,
                       left: size.width * 0.32,
                     ),
+                    Positioned(
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.favorite,
+                          color: color,
+                          size: size.width * 0.08,
+                        ),
+                        onPressed: () {
+                          String month =  getDate();
+                          // print("");
+                          setState(() {
+                            if (color == Colors.grey) {
+                              color = Colors.red;
+                              _likeVideos.add("${widget.link}#${widget.videoAddress}# $month ${Timestamp.now().toDate().day}, ${Timestamp.now().toDate().year}");
+                            } else {
+                              _likeVideos.removeAt(_likeVideos.indexWhere((element) => element.toString().contains("${widget.link}${widget.videoAddress}")));
+                              color = Colors.grey;
+                            }
+
+                            Future.delayed(Duration(seconds: 2),(){
+                              changeDatabaseAdd();
+                            });
+                          });
+                        },
+                      ),
+                      right: 5,
+                      bottom: 5,
+                    )
                   ],
                 ),
               ),
               Container(
+                width: size.width*0.8,
+                alignment: Alignment.topLeft,
                 margin: EdgeInsets.only(top: size.height * 0.03),
                 child: Text(
-                  "$_descr",
+                  "${widget.title.toString().split(".").first}",
                   style: txtStylePop(
-                      size: size.width * 0.03,
+                      size: size.width * 0.04,
                       weight: FontWeight.w600,
+                      color: Colors.black),
+                ),
+              ),
+              Container(
+                width: size.width*0.8,
+                margin: EdgeInsets.only(top: size.height * 0.03),
+                child: Text(
+                  "${widget.desc}",
+                  style: txtStyleCab(
+                      size: size.width * 0.034,
+                      weight: FontWeight.w500,
                       color: Colors.black),
                 ),
               ),
@@ -157,5 +221,58 @@ class _RegularModuleState extends State<RegularModule> {
         ),
       ),
     );
+  }
+
+  changeDatabaseAdd() {
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .update({"likedVideosList": _likeVideos}).whenComplete(() {
+      print("${_likeVideos.length}");
+    });
+  }
+
+  String getDate() {
+    int currentMonth = Timestamp.now().toDate().month;
+    switch (currentMonth) {
+      case 1:
+        return "January";
+        break;
+      case 2:
+        return "February";
+        break;
+      case 3:
+        return "March";
+        break;
+      case 4:
+        return "April";
+        break;
+      case 5:
+        return "May";
+        break;
+      case 6:
+        return "June";
+        break;
+      case 7:
+        return "July";
+        break;
+      case 8:
+        return "August";
+        break;
+      case 9:
+        return "September";
+        break;
+      case 10:
+        return "October";
+        break;
+      case 11:
+        return "November";
+        break;
+      case 12:
+        return "December";
+        break;
+      default:
+        return "";
+    }
   }
 }

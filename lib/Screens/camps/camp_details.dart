@@ -3,6 +3,8 @@ import 'package:levelup/DataModel/camp_model.dart';
 import 'package:levelup/Services/database-server/server.dart';
 import 'package:levelup/Style/appColor.dart';
 import 'package:levelup/Style/appTextStyle.dart';
+import 'package:toast/toast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CampDetails extends StatefulWidget {
  final String campMonth;
@@ -118,73 +120,79 @@ class _CampDetailsState extends State<CampDetails> {
                       child: ListView.builder(
                           itemCount: snapshot.data.data.length??0,
                           itemBuilder: (_,index){
-                        return Container(
-                          height: size.height*0.06,
-                          width: size.width,
-                          color: Colors.white,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                padding: EdgeInsets.only(left: size.width*0.01,right: size.width*0.01,
-                                    bottom: size.height*0.005,
-                                    top: size.height*0.005),
-                                width: size.width*0.14,
-                                decoration: BoxDecoration(
+                        return InkWell(
+                          onTap: (){
+                            Toast.show("link", context);
+                            _launchURL("${snapshot.data.data[index].url}");
+                          },
+                          child: Container(
+                            height: size.height*0.06,
+                            width: size.width,
+                            color: Colors.white,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(left: size.width*0.01,right: size.width*0.01,
+                                      bottom: size.height*0.005,
+                                      top: size.height*0.005),
+                                  width: size.width*0.14,
+                                  decoration: BoxDecoration(
 
+                                  ),
+                                  constraints: BoxConstraints(
+                                      minHeight: size.height*0.06
+                                  ),
+                                  child: Image.network("https://pickleball-levelup.herokuapp.com/camps/getcampsicon/${snapshot.data.data[index].campsIcon}",fit: BoxFit.fill,),
                                 ),
-                                constraints: BoxConstraints(
-                                    minHeight: size.height*0.06
-                                ),
-                                child: Image.asset("assets/images/title1.png",fit: BoxFit.fill,),
-                              ),
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                padding: EdgeInsets.only(left: size.width*0.06),
-                                margin: EdgeInsets.only(right:size.width*0.02),
-                                height: size.height*0.045,
-                                width: size.width/5,
-                                child:Text("${snapshot.data.data[index].camp}",style: txtStylePop(
-                                    color: Colors.black,
-                                    weight: FontWeight.w500,
-                                    size: size.width*0.026
-                                ),
-                                ),
-                              ),
-                              Container(
+                                Container(
                                   alignment: Alignment.centerLeft,
-                                  padding: EdgeInsets.only(left: size.width*0.02),
+                                  padding: EdgeInsets.only(left: size.width*0.06),
+                                  margin: EdgeInsets.only(right:size.width*0.02),
                                   height: size.height*0.045,
                                   width: size.width/5,
-                                  child:Text("${snapshot.data.data[index].date}",style: txtStylePop(
+                                  child:Text("${snapshot.data.data[index].camp}",style: txtStylePop(
                                       color: Colors.black,
                                       weight: FontWeight.w500,
                                       size: size.width*0.026
                                   ),
-                                  )),
-                              Container(
-                                  alignment: Alignment.centerLeft,
-                                  padding: EdgeInsets.only(left: size.width*0.029),
-                                  height: size.height*0.045,
-                                  width: size.width/5,
-                                  child:Text("\$${snapshot.data.data[index].price}",style: txtStylePop(
-                                      color: Colors.black,
-                                      weight: FontWeight.w500,
-                                      size: size.width*0.026
                                   ),
-                                  )),
-                              Container(
-                                  alignment: Alignment.centerLeft,
-                                  height: size.height*0.045,
-                                  width: size.width/5,
-                                  child:Text("${snapshot.data.data[index].level}",style: txtStylePop(
-                                      color: Colors.black,
-                                      weight: FontWeight.w500,
-                                      size: size.width*0.026
-                                  ),
-                                  )),
-                            ],
+                                ),
+                                Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.only(left: size.width*0.02),
+                                    height: size.height*0.045,
+                                    width: size.width/5,
+                                    child:Text("${snapshot.data.data[index].date}",style: txtStylePop(
+                                        color: Colors.black,
+                                        weight: FontWeight.w500,
+                                        size: size.width*0.026
+                                    ),
+                                    )),
+                                Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.only(left: size.width*0.029),
+                                    height: size.height*0.045,
+                                    width: size.width/5,
+                                    child:Text("\$${snapshot.data.data[index].price}",style: txtStylePop(
+                                        color: Colors.black,
+                                        weight: FontWeight.w500,
+                                        size: size.width*0.026
+                                    ),
+                                    )),
+                                Container(
+                                    alignment: Alignment.centerLeft,
+                                    height: size.height*0.045,
+                                    width: size.width/5,
+                                    child:Text("${snapshot.data.data[index].level}",style: txtStylePop(
+                                        color: Colors.black,
+                                        weight: FontWeight.w500,
+                                        size: size.width*0.026
+                                    ),
+                                    )),
+                              ],
+                            ),
                           ),
                         );
                       }),
@@ -203,5 +211,15 @@ class _CampDetailsState extends State<CampDetails> {
 
   void printData(data) {
     print(data);
+  }
+
+  void _launchURL(String _url) async{
+    print("called");
+ try{
+   await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
+
+ }catch(e){
+print(e.toString());
+ }
   }
 }

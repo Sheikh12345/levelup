@@ -35,47 +35,51 @@ class CampModel {
 class Datum {
   Datum({
     this.id,
-    this.camp,
+    this.campsIcon,
     this.price,
-    this.date,
-    this.available,
-    this.level,
-    this.campsLoc,
     this.month,
+    this.level,
+    this.available,
+    this.camp,
+    this.date,
+    this.url,
     this.v,
   });
 
   String id;
-  String camp;
+  String campsIcon;
   int price;
-  String date;
-  int available;
-  String level;
-  String campsLoc;
   String month;
+  String level;
+  int available;
+  String camp;
+  String date;
+  String url;
   int v;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["_id"],
-    camp: json["camp"],
+    campsIcon: json["campsicon"],
     price: json["price"],
-    date: json["date"],
-    available: json["available"],
-    level: json["level"],
-    campsLoc: json["campsLoc"],
     month: json["month"],
+    level: json["level"],
+    available: json["available"],
+    camp: json["camp"],
+    date: json["date"],
+    url: json["url"],
     v: json["__v"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "camp": camp,
+    "campsicon": campsIcon,
     "price": price,
-    "date": date,
-    "available": available,
-    "level": level,
-    "campsLoc": campsLoc,
     "month": month,
+    "level": level,
+    "available": available,
+    "camp": camp,
+    "date": date,
+    "url": url,
     "__v": v,
   };
 }

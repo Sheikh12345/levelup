@@ -1,21 +1,62 @@
 // To parse this JSON data, do
 //
-//     final lesson = lessonFromJson(jsonString);
+//     final allDgfs = allDgfsFromJson(jsonString);
 
 import 'dart:convert';
 
-Lesson lessonFromJson(String str) => Lesson.fromJson(json.decode(str));
+AllDgfs allDgfsFromJson(String str) => AllDgfs.fromJson(json.decode(str));
 
-String lessonToJson(Lesson data) => json.encode(data.toJson());
+String allDgfsToJson(AllDgfs data) => json.encode(data.toJson());
 
-class Lesson {
-  Lesson({
+class AllDgfs {
+  AllDgfs({
+    this.success,
+    this.data,
+  });
+
+  bool success;
+  List<Datum> data;
+
+  factory AllDgfs.fromJson(Map<String, dynamic> json) => AllDgfs(
+    success: json["success"],
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "success": success,
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+  };
+}
+
+class Datum {
+  Datum({
+    this.lessonName,
+    this.data,
+  });
+
+  String lessonName;
+  Data data;
+
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+    lessonName: json["lesson_name"],
+    data: Data.fromJson(json["data"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "lesson_name": lessonName,
+    "data": data.toJson(),
+  };
+}
+
+class Data {
+  Data({
     this.success,
     this.data,
     this.bonus,
     this.thumbnail,
     this.trailer,
-    this.durations,
+    this.dataDurations,
+    this.bonusDuration,
     this.videoDetail,
     this.title,
     this.description,
@@ -27,19 +68,21 @@ class Lesson {
   List<String> bonus;
   List<String> thumbnail;
   List<String> trailer;
-  List<Duration> durations;
+  List<Duration> dataDurations;
+  List<Duration> bonusDuration;
   List<VideoDetail> videoDetail;
   String title;
   String description;
   int price;
 
-  factory Lesson.fromJson(Map<String, dynamic> json) => Lesson(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
     success: json["success"],
     data: List<String>.from(json["data"].map((x) => x)),
     bonus: List<String>.from(json["bonus"].map((x) => x)),
     thumbnail: List<String>.from(json["thumbnail"].map((x) => x)),
     trailer: List<String>.from(json["trailer"].map((x) => x)),
-    durations: List<Duration>.from(json["durations"].map((x) => Duration.fromJson(x))),
+    dataDurations: List<Duration>.from(json["dataDurations"].map((x) => Duration.fromJson(x))),
+    bonusDuration: List<Duration>.from(json["bonusDuration"].map((x) => Duration.fromJson(x))),
     videoDetail: List<VideoDetail>.from(json["videoDetail"].map((x) => VideoDetail.fromJson(x))),
     title: json["title"],
     description: json["description"],
@@ -52,7 +95,8 @@ class Lesson {
     "bonus": List<dynamic>.from(bonus.map((x) => x)),
     "thumbnail": List<dynamic>.from(thumbnail.map((x) => x)),
     "trailer": List<dynamic>.from(trailer.map((x) => x)),
-    "durations": List<dynamic>.from(durations.map((x) => x.toJson())),
+    "dataDurations": List<dynamic>.from(dataDurations.map((x) => x.toJson())),
+    "bonusDuration": List<dynamic>.from(bonusDuration.map((x) => x.toJson())),
     "videoDetail": List<dynamic>.from(videoDetail.map((x) => x.toJson())),
     "title": title,
     "description": description,
@@ -64,19 +108,23 @@ class Duration {
   Duration({
     this.fileName,
     this.duration,
+    this.videoType,
   });
 
   String fileName;
-  double duration;
+  String duration;
+  String videoType;
 
   factory Duration.fromJson(Map<String, dynamic> json) => Duration(
     fileName: json["file_name"],
-    duration: json["duration"].toDouble(),
+    duration: json["duration"],
+    videoType: json["videoType"],
   );
 
   Map<String, dynamic> toJson() => {
     "file_name": fileName,
     "duration": duration,
+    "videoType": videoType,
   };
 }
 
@@ -86,6 +134,8 @@ class VideoDetail {
     this.name,
     this.category,
     this.subCategory,
+    this.lessonName,
+    this.duration,
     this.description,
     this.v,
   });
@@ -94,6 +144,8 @@ class VideoDetail {
   String name;
   String category;
   String subCategory;
+  String lessonName;
+  String duration;
   String description;
   int v;
 
@@ -102,6 +154,8 @@ class VideoDetail {
     name: json["name"],
     category: json["category"],
     subCategory: json["subCategory"],
+    lessonName: json["lessonName"],
+    duration: json["duration"],
     description: json["description"],
     v: json["__v"],
   );
@@ -111,6 +165,8 @@ class VideoDetail {
     "name": name,
     "category": category,
     "subCategory": subCategory,
+    "lessonName": lessonName,
+    "duration": duration,
     "description": description,
     "__v": v,
   };
