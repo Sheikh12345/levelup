@@ -365,7 +365,298 @@ class _CourseOverviewState extends State<CourseOverview>
                                                                       screenPush(
                                                                           context,
                                                                           RegularModule(
-                                                                            title:snapshot.data.videoDetail[index].name,
+                                                                            title:
+                                                                                snapshot.data.videoDetail[index].name,
+                                                                            desc:
+                                                                                snapshot.data.videoDetail[index].description,
+                                                                            link:
+                                                                                widget.link,
+                                                                            imageAddress:
+                                                                                widget.imageLink,
+                                                                            videoAddress:
+                                                                                "${snapshot.data.videoDetail[index].name}",
+                                                                          ));
+                                                                    }
+                                                                  },
+                                                                ),
+                                                                top:
+                                                                    size.height *
+                                                                        0.038,
+                                                                left:
+                                                                    size.width *
+                                                                        0.17,
+                                                              ),
+                                                              Positioned(
+                                                                child:
+                                                                    Container(
+                                                                  margin: EdgeInsets.only(
+                                                                      top: size
+                                                                              .height *
+                                                                          0.05),
+                                                                  height:
+                                                                      size.height *
+                                                                          0.047,
+                                                                  width:
+                                                                      size.width *
+                                                                          0.12,
+                                                                  child: Image
+                                                                      .asset(
+                                                                          "assets/images/iconwhite.png"),
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.1),
+                                                                ),
+                                                                top:
+                                                                    size.height *
+                                                                        0.06,
+                                                                left:
+                                                                    size.width *
+                                                                        0.01,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          margin: EdgeInsets.only(
+                                                              top: size.height *
+                                                                  0.01),
+                                                          width:
+                                                              size.width * 0.45,
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              RichText(
+                                                                text: TextSpan(
+                                                                    children: [
+                                                                      TextSpan(
+                                                                          text:
+                                                                              "${snapshot.data.videoDetail[index].name.toString().split(".").first}",
+                                                                          style: txtStylePop(
+                                                                              color: Colors.black,
+                                                                              size: size.width * 0.024,
+                                                                              weight: FontWeight.w600)),
+                                                                      TextSpan(
+                                                                          text:
+                                                                              " (${int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first) ~/ 60} min  ${int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first)} sec) \n",
+                                                                          style: txtStylePop(
+                                                                              color: Colors.grey[600],
+                                                                              size: size.width * 0.024,
+                                                                              weight: FontWeight.w600)),
+                                                                      TextSpan(
+                                                                          text:
+                                                                              "${descText(snapshot.data.videoDetail[index].description)}",
+                                                                          style: txtStylePop(
+                                                                              color: Colors.grey[600],
+                                                                              size: size.width * 0.024,
+                                                                              weight: FontWeight.w600)),
+                                                                    ]),
+                                                              ),
+                                                              if (snapshot
+                                                                  .data
+                                                                  .videoDetail[
+                                                                      index]
+                                                                  .name
+                                                                  .toString()
+                                                                  .contains(
+                                                                      "duet"))
+                                                                InkWell(
+                                                                  child:
+                                                                      Container(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    margin: EdgeInsets.only(
+                                                                        top: size.height *
+                                                                            0.02,
+                                                                        bottom: size.height *
+                                                                            0.01),
+                                                                    height: size
+                                                                            .height *
+                                                                        0.04,
+                                                                    width:
+                                                                        size.width *
+                                                                            0.4,
+                                                                    color:
+                                                                        primaryClr,
+                                                                    child: Text(
+                                                                      "Video Duet",
+                                                                      style: txtStyleCab(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          weight: FontWeight
+                                                                              .w700,
+                                                                          size: size.width *
+                                                                              0.043),
+                                                                    ),
+                                                                  ),
+                                                                  onTap: () {
+
+                                                                    // screenPush(
+                                                                    //     context,
+                                                                    // DuetMode(
+                                                                    //   jsonData:
+                                                                    //       snapshot.data,
+                                                                    //   videoAddress:
+                                                                    //       "${snapshot.data.videoDetail[index].name}",
+                                                                    // ));
+                                                                  },
+                                                                )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return Container();
+                                                }
+                                              })),
+                                    ),
+
+                                    /// Bonus Videos
+                                    Container(
+                                      width: size.width,
+                                      height: size.height * 0.5,
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: size.height * 0.01),
+                                          height: size.height * 0.495,
+                                          width: size.width,
+                                          child: ListView.builder(
+                                              itemCount: snapshot
+                                                  .data.videoDetail.length,
+                                              itemBuilder: (_, index) {
+                                                if (snapshot
+                                                    .data
+                                                    .videoDetail[index]
+                                                    .subCategory
+                                                    .toString()
+                                                    .contains("bonus")) {
+                                                  return Container(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.all(
+                                                            size.height * 0.01,
+                                                          ),
+                                                          height: size.height *
+                                                              0.15,
+                                                          width:
+                                                              size.width * 0.5,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.green,
+                                                            image: DecorationImage(
+                                                                image: NetworkImage(
+                                                                    "${widget.link}thumbnail.jpg"),
+                                                                fit: BoxFit
+                                                                    .fill),
+                                                          ),
+                                                          child: Stack(
+                                                            children: [
+                                                              Positioned(
+                                                                child:
+                                                                    Container(
+                                                                  width:
+                                                                      size.width *
+                                                                          0.46,
+                                                                  height:
+                                                                      size.height *
+                                                                          0.13,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    border:
+                                                                        Border(
+                                                                      top:
+                                                                          BorderSide(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        width: size.width *
+                                                                            0.005,
+                                                                      ),
+                                                                      bottom:
+                                                                          BorderSide(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        width: size.width *
+                                                                            0.005,
+                                                                      ),
+                                                                      left:
+                                                                          BorderSide(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        width: size.width *
+                                                                            0.005,
+                                                                      ),
+                                                                      right:
+                                                                          BorderSide(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        width: size.width *
+                                                                            0.005,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                top:
+                                                                    size.height *
+                                                                        0.011,
+                                                                left:
+                                                                    size.width *
+                                                                        0.016,
+                                                              ),
+                                                              Positioned(
+                                                                child:
+                                                                    IconButton(
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .play_circle_outline_sharp,
+                                                                    color: Colors
+                                                                        .white
+                                                                        .withOpacity(
+                                                                            0.8),
+                                                                    size: size.width *
+                                                                            0.07 +
+                                                                        16,
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    if (snapshot
+                                                                        .data
+                                                                        .videoDetail[
+                                                                            index]
+                                                                        .name
+                                                                        .contains(
+                                                                            "duet")) {
+                                                                      screenPush(
+                                                                          context,
+                                                                          DuetMode(
+                                                                            jsonData:
+                                                                                snapshot.data,
+                                                                            videoAddress:
+                                                                                "${snapshot.data.videoDetail[index].name}",
+                                                                          ));
+                                                                    } else {
+                                                                      screenPush(
+                                                                          context,
+                                                                          RegularModule(
+                                                                            title:
+                                                                                snapshot.data.videoDetail[index].name,
                                                                             desc:
                                                                                 snapshot.data.videoDetail[index].description,
                                                                             link:
@@ -515,294 +806,6 @@ class _CourseOverviewState extends State<CourseOverview>
                                                   return Container();
                                                 }
                                               })),
-                                    ),
-
-                                    /// Bonus Videos
-                                    Container(
-                                      width: size.width,
-                                      height: size.height * 0.5,
-                                      child: Container(
-                                          margin: EdgeInsets.only(
-                                              top: size.height * 0.01),
-                                          height: size.height * 0.495,
-                                          width: size.width,
-                                          child: ListView.builder(
-                                              itemCount: snapshot
-                                                  .data.videoDetail.length,
-                                              itemBuilder: (_, index) {
-                                                if (snapshot
-                                                    .data
-                                                    .videoDetail[index]
-                                                    .subCategory
-                                                    .toString()
-                                                    .contains("bonus")) {
-                                                  return Container(
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .start,
-                                                      crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
-                                                      children: [
-                                                        Container(
-                                                          margin:
-                                                          EdgeInsets.all(
-                                                            size.height * 0.01,
-                                                          ),
-                                                          height: size.height *
-                                                              0.15,
-                                                          width:
-                                                          size.width * 0.5,
-                                                          decoration:
-                                                          BoxDecoration(
-                                                            color: Colors.green,
-                                                            image: DecorationImage(
-                                                                image: NetworkImage(
-                                                                    "${widget.link}thumbnail.jpg"),
-                                                                fit: BoxFit
-                                                                    .fill),
-                                                          ),
-                                                          child: Stack(
-                                                            children: [
-                                                              Positioned(
-                                                                child:
-                                                                Container(
-                                                                  width:
-                                                                  size.width *
-                                                                      0.46,
-                                                                  height:
-                                                                  size.height *
-                                                                      0.13,
-                                                                  decoration:
-                                                                  BoxDecoration(
-                                                                    color: Colors
-                                                                        .transparent,
-                                                                    border:
-                                                                    Border(
-                                                                      top:
-                                                                      BorderSide(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        width: size.width *
-                                                                            0.005,
-                                                                      ),
-                                                                      bottom:
-                                                                      BorderSide(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        width: size.width *
-                                                                            0.005,
-                                                                      ),
-                                                                      left:
-                                                                      BorderSide(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        width: size.width *
-                                                                            0.005,
-                                                                      ),
-                                                                      right:
-                                                                      BorderSide(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        width: size.width *
-                                                                            0.005,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                top:
-                                                                size.height *
-                                                                    0.011,
-                                                                left:
-                                                                size.width *
-                                                                    0.016,
-                                                              ),
-                                                              Positioned(
-                                                                child:
-                                                                IconButton(
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .play_circle_outline_sharp,
-                                                                    color: Colors
-                                                                        .white
-                                                                        .withOpacity(
-                                                                        0.8),
-                                                                    size: size.width *
-                                                                        0.07 +
-                                                                        16,
-                                                                  ),
-                                                                  onPressed:
-                                                                      () {
-                                                                    if (snapshot
-                                                                        .data
-                                                                        .videoDetail[
-                                                                    index]
-                                                                        .name
-                                                                        .contains(
-                                                                        "duet")) {
-                                                                      screenPush(
-                                                                          context,
-                                                                          DuetMode(
-                                                                            jsonData:
-                                                                            snapshot.data,
-                                                                            videoAddress:
-                                                                            "${snapshot.data.videoDetail[index].name}",
-                                                                          ));
-                                                                    } else {
-                                                                      screenPush(
-                                                                          context,
-                                                                          RegularModule(
-                                                                            title: snapshot.data.videoDetail[index].name,
-                                                                            desc:
-                                                                            snapshot.data.videoDetail[index].description,
-                                                                            link:
-                                                                            widget.link,
-                                                                            imageAddress:
-                                                                            widget.imageLink,
-                                                                            videoAddress:
-                                                                            "${snapshot.data.videoDetail[index].name}",
-                                                                          ));
-                                                                    }
-                                                                  },
-                                                                ),
-                                                                top:
-                                                                size.height *
-                                                                    0.038,
-                                                                left:
-                                                                size.width *
-                                                                    0.17,
-                                                              ),
-                                                              Positioned(
-                                                                child:
-                                                                Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      top: size
-                                                                          .height *
-                                                                          0.05),
-                                                                  height:
-                                                                  size.height *
-                                                                      0.047,
-                                                                  width:
-                                                                  size.width *
-                                                                      0.12,
-                                                                  child: Image
-                                                                      .asset(
-                                                                      "assets/images/iconwhite.png"),
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                      0.1),
-                                                                ),
-                                                                top:
-                                                                size.height *
-                                                                    0.06,
-                                                                left:
-                                                                size.width *
-                                                                    0.01,
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          margin: EdgeInsets.only(
-                                                              top: size.height *
-                                                                  0.01),
-                                                          width:
-                                                          size.width * 0.45,
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                            children: [
-                                                              RichText(
-                                                                text: TextSpan(
-                                                                    children: [
-                                                                      TextSpan(
-                                                                          text:
-                                                                          "${snapshot.data.videoDetail[index].name.toString().split(".").first}",
-                                                                          style: txtStylePop(
-                                                                              color: Colors.black,
-                                                                              size: size.width * 0.024,
-                                                                              weight: FontWeight.w600)),
-                                                                      TextSpan(
-                                                                          text:
-                                                                          " (${int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first) ~/ 60} min  ${int.parse(snapshot.data.videoDetail[index].duration.toString().split(".").first)} sec) \n",
-                                                                          style: txtStylePop(
-                                                                              color: Colors.grey[600],
-                                                                              size: size.width * 0.024,
-                                                                              weight: FontWeight.w600)),
-                                                                      TextSpan(
-                                                                          text:
-                                                                          "${descText(snapshot.data.videoDetail[index].description)}",
-                                                                          style: txtStylePop(
-                                                                              color: Colors.grey[600],
-                                                                              size: size.width * 0.024,
-                                                                              weight: FontWeight.w600)),
-                                                                    ]),
-                                                              ),
-                                                              if (snapshot
-                                                                  .data
-                                                                  .videoDetail[
-                                                              index]
-                                                                  .name
-                                                                  .toString()
-                                                                  .contains(
-                                                                  "duet"))
-                                                                InkWell(
-                                                                  child:
-                                                                  Container(
-                                                                    alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                    margin: EdgeInsets.only(
-                                                                        top: size.height *
-                                                                            0.02,
-                                                                        bottom: size.height *
-                                                                            0.01),
-                                                                    height: size
-                                                                        .height *
-                                                                        0.04,
-                                                                    width:
-                                                                    size.width *
-                                                                        0.4,
-                                                                    color:
-                                                                    primaryClr,
-                                                                    child: Text(
-                                                                      "Video Duet",
-                                                                      style: txtStyleCab(
-                                                                          color: Colors
-                                                                              .white,
-                                                                          weight: FontWeight
-                                                                              .w700,
-                                                                          size: size.width *
-                                                                              0.043),
-                                                                    ),
-                                                                  ),
-                                                                  onTap: () {
-                                                                    screenPush(
-                                                                        context,
-                                                                        DuetMode(
-                                                                          jsonData:
-                                                                          snapshot.data,
-                                                                          videoAddress:
-                                                                          "${snapshot.data.videoDetail[index].name}",
-                                                                        ));
-                                                                  },
-                                                                )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                } else {
-                                                  return Container();
-                                                }
-                                              })),
                                     )
                                   ],
                                 ),
@@ -824,10 +827,10 @@ class _CourseOverviewState extends State<CourseOverview>
     );
   }
 
-  descText(String text){
-    if(text.toString().length>135){
-      return text.toString().substring(0,135);
-    }else{
+  descText(String text) {
+    if (text.toString().length > 135) {
+      return text.toString().substring(0, 135);
+    } else {
       return text;
     }
   }

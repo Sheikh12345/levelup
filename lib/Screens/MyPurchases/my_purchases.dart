@@ -174,7 +174,7 @@ class _MyPurchasesState extends State<MyPurchases> {
                       });
                 } else {
                   return Center(
-                      child: Text("You haven't purchased any courses yet"));
+                      child: Text("Loading..."));
                 }
               } else {
                 return Center(

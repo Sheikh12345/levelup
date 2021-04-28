@@ -5,7 +5,12 @@ import 'package:levelup/common/common.dart';
 
 import '../details/course_details_ild.dart';
 
-class ILDSSection extends StatelessWidget {
+class ILDSSection extends StatefulWidget {
+  @override
+  _ILDSSectionState createState() => _ILDSSectionState();
+}
+
+class _ILDSSectionState extends State<ILDSSection> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -43,84 +48,83 @@ class ILDSSection extends StatelessWidget {
                                         "https://pickleball-levelup.herokuapp.com/read/ild/${snapshot.data.data[index].lessonName}/${snapshot.data.data[index].data.thumbnail[0]}",
                                     route:
                                         "${snapshot.data.data[index].lessonName}",
-                                  )
-                              );
+                                  ));
                             },
                             child: Column(
                               children: [
                                 Container(
-                                    margin: EdgeInsets.only(
-                                      left: size.width * 0.04,
-                                    ),
-                                    height: size.height * 0.2,
-                                    width: size.width * 0.65,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              "https://pickleball-levelup.herokuapp.com/read/ild/${snapshot.data.data[index].lessonName}/${snapshot.data.data[index].data.thumbnail[0]}"),
-                                          fit: BoxFit.fill),
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        Positioned(
-                                          child: Container(
-                                            width: size.width * 0.59,
-                                            height: size.height * 0.165,
-                                            decoration: BoxDecoration(
-                                                color: Colors.black
-                                                    .withOpacity(0.1),
-                                                border: Border(
-                                                    top: BorderSide(
-                                                      color: Colors.white,
-                                                      width: size.width * 0.005,
-                                                    ),
-                                                    bottom: BorderSide(
-                                                      color: Colors.white,
-                                                      width: size.width * 0.005,
-                                                    ),
-                                                    left: BorderSide(
-                                                      color: Colors.white,
-                                                      width: size.width * 0.005,
-                                                    ),
-                                                    right: BorderSide(
-                                                      color: Colors.white,
-                                                      width: size.width * 0.005,
-                                                    ))),
-                                          ),
-                                          top: size.height * 0.018,
-                                          left: size.width * 0.026,
+                                  margin: EdgeInsets.only(
+                                    left: size.width * 0.04,
+                                  ),
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.65,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            "https://pickleball-levelup.herokuapp.com/read/ild/${snapshot.data.data[index].lessonName}/${snapshot.data.data[index].data.thumbnail[0]}"),
+                                        fit: BoxFit.fill),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        child: Container(
+                                          width: size.width * 0.59,
+                                          height: size.height * 0.165,
+                                          decoration: BoxDecoration(
+                                              color:
+                                                  Colors.black.withOpacity(0.1),
+                                              border: Border(
+                                                  top: BorderSide(
+                                                    color: Colors.white,
+                                                    width: size.width * 0.005,
+                                                  ),
+                                                  bottom: BorderSide(
+                                                    color: Colors.white,
+                                                    width: size.width * 0.005,
+                                                  ),
+                                                  left: BorderSide(
+                                                    color: Colors.white,
+                                                    width: size.width * 0.005,
+                                                  ),
+                                                  right: BorderSide(
+                                                    color: Colors.white,
+                                                    width: size.width * 0.005,
+                                                  ),),),
                                         ),
-                                        Positioned(
-                                          child: Container(
-                                            width: size.width * 0.34,
-                                            child: Text(
-                                              "${snapshot.data.data[index].data.title}",
-                                              style: txtStyleCab(
-                                                  color: Colors.white,
-                                                  size: size.width * 0.045,
-                                                  weight: FontWeight.w900),
-                                            ),
+                                        top: size.height * 0.018,
+                                        left: size.width * 0.026,
+                                      ),
+                                      Positioned(
+                                        child: Container(
+                                          width: size.width * 0.34,
+                                          child: Text(
+                                            "${snapshot.data.data[index].data.title}",
+                                            style: txtStyleCab(
+                                                color: Colors.white,
+                                                size: size.width * 0.045,
+                                                weight: FontWeight.w900),
                                           ),
-                                          top: size.height * 0.05,
-                                          left: size.width * 0.26,
                                         ),
-                                        Positioned(
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                                top: size.height * 0.1),
-                                            height: size.height * 0.03,
-                                            width: size.width * 0.2,
-                                            color:
-                                                Colors.black.withOpacity(0.1),
-                                            child: Image.asset(
-                                                "assets/images/iconwhite.png"),
-                                          ),
-                                          top: size.height * 0.058,
-                                          left: size.width * 0.012,
-                                        )
-                                      ],
-                                    )),
+                                        top: size.height * 0.05,
+                                        left: size.width * 0.26,
+                                      ),
+                                      Positioned(
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: size.height * 0.1),
+                                          height: size.height * 0.03,
+                                          width: size.width * 0.2,
+                                          color: Colors.black.withOpacity(0.1),
+                                          child: Image.asset(
+                                              "assets/images/iconwhite.png"),
+                                        ),
+                                        top: size.height * 0.058,
+                                        left: size.width * 0.012,
+                                      )
+                                    ],
+                                  ),
+                                ),
                                 Container(
                                   margin: EdgeInsets.only(
                                     left: size.width * 0.04,
@@ -145,6 +149,7 @@ class ILDSSection extends StatelessWidget {
                         : Container();
                   });
             } else if (snapshot.hasError) {
+              setState(() {});
               return Text("Network Error");
             } else {
               return Center(child: CircularProgressIndicator());

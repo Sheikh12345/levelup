@@ -29,13 +29,12 @@ class _StoreState extends State<Store> {
       ),
       body: Container(
         width: size.width,
-
        child: FutureBuilder(
          future: Server().getStoreItemsFromServer(),
          builder: (_,snapshot){
            if(snapshot.hasData){
              return ListView.builder(
-                 itemCount: 2,
+                 itemCount: snapshot.data.data.length,
                  itemBuilder: (_,index){
                 return Container(
                  height: size.height * 0.28,
