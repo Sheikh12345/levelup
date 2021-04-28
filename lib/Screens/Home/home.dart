@@ -1,18 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:levelup/Screens/Duets/duet_viewing.dart';
-import 'package:levelup/Screens/Home/component/dialog.dart';
 import 'package:levelup/Screens/Profile/profile.dart';
 import 'package:levelup/Screens/Store/store.dart';
 import 'package:levelup/Screens/Viewing/viewing.dart';
-import 'package:levelup/Screens/auth/sign_in.dart';
 import 'package:levelup/Screens/camps/levelup_camps.dart';
 import 'package:levelup/Style/appColor.dart';
-import 'package:levelup/common/common.dart';
-import 'package:toast/toast.dart';
 
 import 'home_page.dart';
 

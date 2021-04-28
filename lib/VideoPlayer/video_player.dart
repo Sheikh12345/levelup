@@ -34,8 +34,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
             child: BetterPlayer.network(
               "${widget.address}",
               betterPlayerConfiguration: BetterPlayerConfiguration(
-                /// auto dispose is off
-                  aspectRatio: 16 / 9,
+                    aspectRatio: 16 / 9,
                   autoDispose: true
               ),
             ),

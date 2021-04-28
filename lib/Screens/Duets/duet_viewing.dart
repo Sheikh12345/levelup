@@ -12,7 +12,6 @@ class DuetView extends StatefulWidget {
 }
 
 class _DuetViewState extends State<DuetView> {
-  String _serverUrl ="https://pickleball-levelup.herokuapp.com";
 
 
   @override
