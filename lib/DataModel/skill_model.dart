@@ -128,6 +128,7 @@ class VideoDetail {
     this.subCategory,
     this.duration,
     this.description,
+    this.thumbnail,
     this.v,
   });
 
@@ -137,6 +138,7 @@ class VideoDetail {
   String subCategory;
   String duration;
   String description;
+  String thumbnail;
   int v;
 
   factory VideoDetail.fromJson(Map<String, dynamic> json) => VideoDetail(
@@ -146,6 +148,7 @@ class VideoDetail {
     subCategory: json["subCategory"],
     duration: json["duration"],
     description: json["description"],
+    thumbnail: json["thumbnail"],
     v: json["__v"],
   );
 
@@ -156,6 +159,7 @@ class VideoDetail {
     "subCategory": subCategory,
     "duration": duration,
     "description": description,
+    "thumbnail": thumbnail,
     "__v": v,
   };
 }

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:levelup/Screens/Instruc_videos/instruc_video_online.dart';
+import 'package:levelup/Screens/Store/store.dart';
 import 'package:levelup/Screens/auth/sign_in.dart';
 import 'package:levelup/Screens/camps/levelup_camps.dart';
 import 'package:levelup/Style/appColor.dart';
@@ -81,7 +82,7 @@ class _HomePageState extends State<HomePage> {
             ),
             InkWell(
               onTap: () {
-                _launchURL("https://www.leveluppickleballcamps.com/shop-all");
+               screenPush(context, Store());
               },
               child: Container(
                 child: Stack(
@@ -218,64 +219,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ignore: non_constant_identifier_names
-  DialogContent(Size size) {
-    return Stack(
-      alignment: Alignment.center,
-      overflow: Overflow.visible,
-      children: [
-        Container(
-          alignment: Alignment.center,
-          height: size.width * 0.7,
-          width: size.width,
-        ),
-        Positioned(
-          bottom: 190,
-          left: 50,
-          right: 50,
-          child: CircleAvatar(
-            radius: 60,
-            backgroundColor: Colors.transparent,
-            child: Image.asset(
-              "assets/images/icon.png",
-            ),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.only(top: 80),
-          height: size.width * 0.6,
-          child: Column(
-            children: [
-              Text(
-                "Thanks for choosing us",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-              ),
-              Text(
-                "We will contact you soon!",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                    height: 2,
-                    color: Colors.black),
-              ),
-              Spacer(),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  "Ok",
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF005C97),
-                      fontWeight: FontWeight.w900),
-                ),
-              )
-            ],
-          ),
-        )
-      ],
-    );
-  }
+
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:levelup/Screens/Duets/duet_mode.dart';
 import 'package:levelup/Screens/MyPurchases/regular_module.dart';
@@ -264,11 +266,11 @@ class _CourseOverviewState extends State<CourseOverview>
                                                           decoration:
                                                               BoxDecoration(
                                                             color: Colors.green,
-                                                            image: DecorationImage(
-                                                                image: NetworkImage(
-                                                                    "${widget.link}thumbnail.jpg"),
-                                                                fit: BoxFit
-                                                                    .fill),
+                                                            image:
+                                                                DecorationImage(
+                                                                    image: MemoryImage(base64Decode(snapshot.data.videoDetail[index].thumbnail.substring(snapshot.data.videoDetail[index].thumbnail.indexOf(",")+1))),
+                                                                    fit: BoxFit
+                                                                        .fill),
                                                           ),
                                                           child: Stack(
                                                             children: [
@@ -450,7 +452,7 @@ class _CourseOverviewState extends State<CourseOverview>
                                                                               weight: FontWeight.w600)),
                                                                       TextSpan(
                                                                           text:
-                                                                              "${descText(snapshot.data.videoDetail[index].description)}",
+                                                                          "${snapshot.data.videoDetail[index].description.toString().length>135?snapshot.data.videoDetail[index].description.toString().substring(0, 135):snapshot.data.videoDetail[index].description.toString()}",
                                                                           style: txtStylePop(
                                                                               color: Colors.grey[600],
                                                                               size: size.width * 0.024,
@@ -496,7 +498,6 @@ class _CourseOverviewState extends State<CourseOverview>
                                                                     ),
                                                                   ),
                                                                   onTap: () {
-
                                                                     // screenPush(
                                                                     //     context,
                                                                     // DuetMode(
@@ -560,8 +561,7 @@ class _CourseOverviewState extends State<CourseOverview>
                                                               BoxDecoration(
                                                             color: Colors.green,
                                                             image: DecorationImage(
-                                                                image: NetworkImage(
-                                                                    "${widget.link}thumbnail.jpg"),
+                                                                image:   MemoryImage(base64Decode(snapshot.data.videoDetail[index].thumbnail.substring(snapshot.data.videoDetail[index].thumbnail.indexOf(",")+1))),
                                                                 fit: BoxFit
                                                                     .fill),
                                                           ),
@@ -740,7 +740,7 @@ class _CourseOverviewState extends State<CourseOverview>
                                                                               weight: FontWeight.w600)),
                                                                       TextSpan(
                                                                           text:
-                                                                              "${descText(snapshot.data.videoDetail[index].description)}",
+                                                                          "${snapshot.data.videoDetail[index].description.toString().length>135?snapshot.data.videoDetail[index].description.toString().substring(0, 135):snapshot.data.videoDetail[index].description.toString()}",
                                                                           style: txtStylePop(
                                                                               color: Colors.grey[600],
                                                                               size: size.width * 0.024,

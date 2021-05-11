@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:levelup/Screens/Duets/duet_mode.dart';
 import 'package:levelup/Screens/MyPurchases/regular_module.dart';
@@ -265,8 +267,8 @@ class _VideoOverviewState extends State<VideoOverview>
                                                               BoxDecoration(
                                                             color: Colors.green,
                                                             image: DecorationImage(
-                                                                image: NetworkImage(
-                                                                    "${widget.link}thumbnail.jpg"),
+                                                                image: MemoryImage(base64Decode(snapshot.data.videoDetail[index].thumbnail.substring(snapshot.data.videoDetail[index].thumbnail.indexOf(",")+1))),
+
                                                                 fit: BoxFit
                                                                     .fill),
                                                           ),
@@ -450,7 +452,7 @@ class _VideoOverviewState extends State<VideoOverview>
                                                                               weight: FontWeight.w600)),
                                                                       TextSpan(
                                                                           text:
-                                                                              "${snapshot.data.videoDetail[index].description.toString().substring(0, 135)}",
+                                                                          "${snapshot.data.videoDetail[index].description.toString().length>135?snapshot.data.videoDetail[index].description.toString().substring(0, 135):snapshot.data.videoDetail[index].description.toString()}",
                                                                           style: txtStylePop(
                                                                               color: Colors.grey[600],
                                                                               size: size.width * 0.024,
@@ -559,8 +561,7 @@ class _VideoOverviewState extends State<VideoOverview>
                                                               BoxDecoration(
                                                             color: Colors.green,
                                                             image: DecorationImage(
-                                                                image: NetworkImage(
-                                                                    "${widget.link}thumbnail.jpg"),
+                                                                image: MemoryImage(base64Decode(snapshot.data.videoDetail[index].thumbnail.substring(snapshot.data.videoDetail[index].thumbnail.indexOf(",")+1))),
                                                                 fit: BoxFit
                                                                     .fill),
                                                           ),
@@ -747,7 +748,7 @@ class _VideoOverviewState extends State<VideoOverview>
                                                                               weight: FontWeight.w600)),
                                                                       TextSpan(
                                                                           text:
-                                                                              "${snapshot.data.videoDetail[index].description.toString().substring(0, 135)}",
+                                                                              "${snapshot.data.videoDetail[index].description.toString().length>135?snapshot.data.videoDetail[index].description.toString().substring(0, 135):snapshot.data.videoDetail[index].description.toString()}",
                                                                           style: txtStylePop(
                                                                               color: Colors.grey[600],
                                                                               size: size.width * 0.024,

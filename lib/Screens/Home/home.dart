@@ -74,8 +74,8 @@ class _HomeState extends State<Home> {
               BottomNavigationBarItem(
                 backgroundColor: primaryClr,
                 icon: Container(
-                    width: size.width * 0.12,
-                    height: size.height * 0.034,
+                    width: size.width * 0.11,
+                    height: size.height * 0.033,
                     child: Image.asset(
                       "assets/menuimg/duets.png",
                     )),
@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
                 backgroundColor: primaryClr,
                 icon: Container(
                     width: size.width * 0.07,
-                    height: size.height * 0.034,
+                    height: size.height * 0.033,
                     child: Image.asset(
                       "assets/menuimg/video.png",
                     )),
@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
                 backgroundColor: primaryClr,
                 icon: Container(
                     width: size.width * 0.07,
-                    height: size.height * 0.034,
+                    height: size.height * 0.033,
                     child: Image.asset(
                       "assets/menuimg/paddle.png",
                     )),
@@ -117,7 +117,7 @@ class _HomeState extends State<Home> {
                 backgroundColor: primaryClr,
                 icon: Container(
                     width: size.width * 0.05,
-                    height: size.height * 0.034,
+                    height: size.height * 0.033,
                     child: Image.asset(
                       "assets/menuimg/up.png",
                     )),

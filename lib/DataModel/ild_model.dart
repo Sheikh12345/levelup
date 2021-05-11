@@ -60,7 +60,7 @@ class IldModel {
     "videoDetail": List<dynamic>.from(videoDetail.map((x) => x.toJson())),
     "title": title,
     "description": description,
-    "price": price,
+    "price": price
   };
 }
 
@@ -97,10 +97,12 @@ class VideoDetail {
     this.lessonName,
     this.duration,
     this.description,
+    this.thumbnail,
     this.v,
   });
 
   String id;
+  String thumbnail;
   String name;
   String category;
   String subCategory;
@@ -118,6 +120,7 @@ class VideoDetail {
     duration: json["duration"],
     description: json["description"],
     v: json["__v"],
+    thumbnail: json["thumbnail"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -128,6 +131,7 @@ class VideoDetail {
     "lessonName": lessonName,
     "duration": duration,
     "description": description,
-    "__v": v,
+    "thumbnail": thumbnail,
+    "__v": v
   };
 }

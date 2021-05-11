@@ -138,9 +138,11 @@ class VideoDetail {
     this.duration,
     this.description,
     this.v,
+    this.thumbnail,
   });
 
   String id;
+  String thumbnail;
   String name;
   String category;
   String subCategory;
@@ -158,6 +160,7 @@ class VideoDetail {
     duration: json["duration"],
     description: json["description"],
     v: json["__v"],
+    thumbnail: json["thumbnail"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -169,5 +172,6 @@ class VideoDetail {
     "duration": duration,
     "description": description,
     "__v": v,
+    "thumbnail": thumbnail,
   };
 }
